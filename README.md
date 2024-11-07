@@ -113,3 +113,43 @@ python -m unittest discover tests
 - **"GasPrice lower than minimum allowable" Error**: Increase the gas price setting in `web3_client.py`.
 - **Missing ABI**: Make sure the `TOKEN_ABI` for the ERC-20 token is correctly added.
 
+## Setting Up the Project
+
+1. **Create a Virtual Environment**:
+   ```bash
+   python -m venv venv
+   ```
+
+2. **Activate the Virtual Environment**:
+   - On macOS and Linux:
+     ```bash
+     source venv/bin/activate
+     ```
+   - On Windows:
+     ```bash
+     .\venv\Scripts\activate
+     ```
+
+3. **Install Dependencies**:
+   After activating the virtual environment, install the dependencies listed in `requirements.txt`:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run the Code**:
+   Start the agent by running:
+   ```bash
+   python scripts/run_agent.py
+   ```
+
+5. **Run Tests**:
+   To execute unit and integration tests:
+   ```bash
+   python -m unittest discover tests
+   ```
+
+6. **Deactivate the Virtual Environment**:
+   Once done, you can deactivate the virtual environment:
+   ```bash
+   deactivate
+   ```

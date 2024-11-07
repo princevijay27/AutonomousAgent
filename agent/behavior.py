@@ -8,6 +8,9 @@ class Behavior:
         raise NotImplementedError("Must be implemented by subclasses.")
 
 class RandomMessageBehavior:
+    def __init__(self):
+        self.interval = 2  # Every 2 seconds
+
     WORDS = ["hello", "sun", "world", "space", "moon", "crypto", "sky", "ocean", "universe", "human"]
 
     def execute(self, inbox):
@@ -34,10 +37,10 @@ class RandomMessageBehavior:
             break
 
 class TokenBalanceBehavior:
-    def __init__(self, token_interaction, address, check_interval=10):
+    def __init__(self, token_interaction, address):
         self.token_interaction = token_interaction
         self.address = address
-        self.check_interval = check_interval
+        self.interval = 10  # Execute every 10 seconds
 
     def execute(self, outbox):
         """Check the ERC-20 token balance and print it."""

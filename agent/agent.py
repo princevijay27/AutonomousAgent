@@ -1,3 +1,5 @@
+# agent/agent.py
+
 import threading
 import time
 from agent.message import InBox, OutBox, Message
@@ -30,24 +32,25 @@ class Agent:
                     handler.handle(message)
                 else:
                     print(f"No handler registered for message type: {message.type}")
+            time.sleep(0.1)  # Add a small delay to prevent high CPU usage
 
-    def run_behaviors(self):
-        """Continuously run all registered behaviors, adding generated messages to inbox."""
+    def run_behavior(self, behavior, interval):
+        """Run a behavior at its specified interval."""
         while not self._stop_event.is_set():
-            for behavior in self.behaviors:
-                behavior.execute(self.inbox)  
-            time.sleep(1)  # Adjust based on desired behavior frequency
+            behavior.execute(self.inbox)
+            time.sleep(interval)
 
     def start(self):
         """Start the agent's message processing and behavior execution."""
         self._message_thread = threading.Thread(target=self.process_messages)
-        self._behavior_thread = threading.Thread(target=self.run_behaviors)
-        
         self._message_thread.start()
-        self._behavior_thread.start()
+        
+        # Start each behavior in its own thread
+        for behavior in self.behaviors:
+            interval = behavior.interval if hasattr(behavior, 'interval') else 1
+            threading.Thread(target=self.run_behavior, args=(behavior, interval)).start()
 
     def stop(self):
         """Stop the agent's threads gracefully."""
         self._stop_event.set()
         self._message_thread.join()
-        self._behavior_thread.join()

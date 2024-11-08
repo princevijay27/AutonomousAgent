@@ -1,6 +1,7 @@
 import random
 import time
 from agent.message import Message
+from datetime import datetime
 
 class Behavior:
     def execute(self, outbox):
@@ -33,7 +34,9 @@ class RandomMessageBehavior:
             # Create and add the message to the inbox
             message = Message(type=message_type, content=content)
             inbox.add_message(message)
-            print(f"Random message generated: {content} (type: {message_type})")
+            # print(f"Random message generated: {content} (type: {message_type})")
+            print(f"[{datetime.now()}] Random message generated: {content} (type: {message_type})")
+
             break
 
 class TokenBalanceBehavior:
@@ -45,4 +48,5 @@ class TokenBalanceBehavior:
     def execute(self, outbox):
         """Check the ERC-20 token balance and print it."""
         balance = self.token_interaction.get_token_balance(self.address)
-        print(f"Token balance for {self.address}: {balance}")
+        # print(f"Token balance for {self.address}: {balance}")
+        print(f"[{datetime.now()}] Token balance for {self.address}: {balance}")

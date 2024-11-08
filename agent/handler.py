@@ -1,3 +1,4 @@
+from datetime import datetime
 from agent.message import Message
 
 class MessageHandler:
@@ -9,7 +10,8 @@ class HelloHandler(MessageHandler):
     def handle(self, message: Message):
         """Handle messages containing 'hello'."""
         if "hello" in message.content:
-            print("HelloHandler received:", message)
+            # print("HelloHandler received:", message)
+            print(f"[{datetime.now()}] HelloHandler received: {message}")
 
 class CryptoHandler:
     def __init__(self, token_interaction, source_address, target_address, private_key):
@@ -20,7 +22,8 @@ class CryptoHandler:
 
     def handle(self, message: Message):
         """Handle 'crypto' messages by initiating a token transfer."""
-        print("CryptoHandler received a message:", message)
+        # print("CryptoHandler received a message:", message)
+        print(f"[{datetime.now()}] CryptoHandler received: {message}")
         print("Message content:", message.content)
     
         if message.type == "crypto":
@@ -33,6 +36,8 @@ class CryptoHandler:
                 transaction_hash = self.token_interaction.transfer_tokens(
                     self.source_address, self.target_address, amount, self.private_key
                 )
-                print(f"Token transfer initiated. Transaction hash: {transaction_hash}")
+                print(f"[{datetime.now()}] Token transfer initiated. Transaction hash: {transaction_hash}")
+                # print(f"Token transfer initiated. Transaction hash: {transaction_hash}")
             except Exception as e:
-                print(f"Failed to initiate token transfer: {e}")
+                print(f"[{datetime.now()}] Failed to initiate token transfer: {e}")
+                # print(f"Failed to initiate token transfer: {e}")
